@@ -1,5 +1,6 @@
 package main.java.Proyecto;
 
+
 public class Pokedex {
     private int numeroPokedex;
     private String nombre;
@@ -33,5 +34,13 @@ public class Pokedex {
 
     public void setDescripcion(String descripcion){
         this.descripcion = descripcion;
+    }
+// metodos
+    public void agregarAPokedex(){
+        //this.
+    }
+
+    public void verPokemon(){
+        System.out.println("El pokemon " + this.nombre + " \n Tiene el numero en la pokedex " + this.numeroPokedex + " \n Sobre el pokemon: \n " + this.descripcion);
     }
 }
