@@ -1,7 +1,7 @@
 create database pokemon;
 use pokemon;
 
-create table misPokemon(
+create table pokemon(
 	id int auto_increment primary key,
     numeroPokedex int not null,
     nombre varchar(50) not null,
@@ -23,8 +23,44 @@ create table pokedex(
     descripcion varchar (70)
 );
 
+create table entrenador(
+	id int primary key auto_increment,
+    nombre varchar(50) not null,
+    edad int,
+    genero varchar(10)
+);
+
+create table mochila(
+	id int auto_increment primary key,
+    espacio int,
+    pokelas int, 
+    caramelos int, 
+    posiones int
+);
+
+/* Agregar columna de entrenador a pokemones */
+alter table pokemon
+add column entrenador int after numeroPokedex;
+
+/* agregar evoluciones en pokedex */ 
 alter table pokedex 
 add column idPreEvolucion int after numeroPokedex, 
 add column idEvolucion int after idPreEvolucion;
+
+/* agregar columna mochila a entrenador */ 
+alter table entrenador
+add column mochila int not null;
+
+/* relacion pokemon - entrenador */ 
+alter table pokemon
+add constraint foreign key (entrenador) references entrenador(id);
+
+/* relacion pokemon - pokedex */
+alter table pokemon
+add constraint foreign key (numeroPokedex) references pokedex(numeroPokedex);
+
+/* relacion entrenador - mochila */ 
+alter table entrenador
+add constraint foreign key (mochila) references mochila(id);
 
 select * from pokemon.pokedex;
