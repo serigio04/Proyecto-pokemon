@@ -1,24 +1,26 @@
 package main.java.TipoPokemon;
+import main.java.Proyecto.*;
 
-/**
- * Pokemon
- */
 public abstract class Pokemon {
     public int numPokedex;
     protected String nombre;
     protected double vida;
     protected double experiencia;
     protected int nivel;
+    Entrenador entrenador;
     double danioBase = Math.random() * (5 - 1) + 1;
     double xpBase;
 
-    public Pokemon (int numPokedex, String nombre, double vida, double experiencia, int nivel){
+    public Pokemon (int numPokedex, Entrenador entrenador, String nombre, double vida, double experiencia, int nivel){
         this.numPokedex = numPokedex;
+        this.entrenador = entrenador;
         this.nombre = nombre;
         this.vida = 10;
         this.experiencia = 0;
         this.nivel = 1;
     }
+
+    public Pokemon (){}
 
 // Métodos get
     public int getNumPokedex() {

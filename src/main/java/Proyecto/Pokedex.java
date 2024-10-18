@@ -2,7 +2,7 @@ package main.java.Proyecto;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import database.Conection.ConectionDB;
+import database.Conection.ConectionDB; 
 
 
 public class Pokedex {
@@ -41,7 +41,17 @@ public class Pokedex {
     }
 // metodos
     public void agregarAPokedex(){
-        //this.
+        Connection conexion = ConectionDB.conectar();
+        String sql = "insert into pokemon (numeroPokedex, entrenador, nombre, tipo, nivel) values (?,?,?,?,?)";
+
+        if(conexion != null){
+            try{
+                Statement stmt = conexion.createStatement();
+            }
+            catch(Exception e){
+                
+            }
+        }
     }
 
     public void verPokemon(){
