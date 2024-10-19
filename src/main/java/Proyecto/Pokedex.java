@@ -1,62 +1,64 @@
 package main.java.Proyecto;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import database.Conection.ConectionDB; 
+import database.Conection.ConectionDB;
+import main.java.TipoPokemon.Pokemon;
 
 
 public class Pokedex {
     private int numeroPokedex;
     private String nombre;
     private String descripcion;
+    Pokemon pokemon;
 
-    public Pokedex(int numeroPokedex, String nombre, String descripcion){
-        this.numeroPokedex = numeroPokedex;
-        this.nombre =  nombre;
-        this.descripcion = descripcion;
+    public Pokedex(){}
+
+    public Pokedex(Pokemon pokemon, String descripcion){
+        this.pokemon = pokemon;
     }
 
-    public int getNumPokedex(){
-        return numeroPokedex;
-    }
-
-    public String getNombre(){
-        return nombre;
+    public Pokemon getPokemon(){
+        return pokemon;
     }
 
     public String getDescripcion(){
         return descripcion;
     }
 
-    public void setNumPokedex(int numeroPokedex){
-        this.numeroPokedex = numeroPokedex;
-    }
-
-    public void setNombre(String nombre){
-        this.nombre = nombre;
-    }
-
     public void setDescripcion(String descripcion){
         this.descripcion = descripcion;
     }
 // metodos
-    public void agregarAPokedex(){
-        Connection conexion = ConectionDB.conectar();
-        String sql = "insert into pokemon (numeroPokedex, entrenador, nombre, tipo, nivel) values (?,?,?,?,?)";
-
+    public void agregarAPokedex(Connection conexion){
         if(conexion != null){
-            try{
-                Statement stmt = conexion.createStatement();
+            String sql = "insert into pokemon (numeroPokedex, entrenador, nombre, tipo, nivel, vida, experiencia) values (?,?,?,?,?,?,?)";
+            try (PreparedStatement pstmt = conexion.prepareStatement(sql)){
+                pstmt.setInt(1, pokemon.getNumPokedex());
+                pstmt.setInt(2, pokemon.getEntrenador());
+                pstmt.setString(3, pokemon.getNombre());
+                pstmt.setString(4, pokemon.getClass().getSimpleName());
+                pstmt.setInt(5, pokemon.getNivel());
+                pstmt.setDouble(6, pokemon.getVida());
+                pstmt.setDouble(7, pokemon.getExperiencia());
+
+                pstmt.executeUpdate();
+                System.out.println("tu pokemon "+pokemon.getNombre()+" ha sido agregado exitosamente");
             }
-            catch(Exception e){
-                
+            catch(SQLException e){
+                e.printStackTrace();
             }
+        }else{
+            System.out.println("No hay conexión con la base de datos");
         }
     }
 
     public void verPokemon(){
         System.out.println("El pokemon " + this.nombre + " \n Tiene el numero en la pokedex " + this.numeroPokedex + " \n Sobre el pokemon: \n " + this.descripcion);
     }
+
     public static void listarPokemon() {
         Connection conexion = ConectionDB.conectar();
 
@@ -88,16 +90,9 @@ public class Pokedex {
                 stmt.close();
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    // Cerrar la conexión
-                    if (conexion != null && !conexion.isClosed()) {
-                        conexion.close();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
+        }else{
+            System.out.println("La conexión a la base de datos es nula.");
         }
     }
 }
