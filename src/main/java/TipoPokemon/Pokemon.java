@@ -15,9 +15,9 @@ public abstract class Pokemon {
         this.numPokedex = numPokedex;
         this.entrenador = entrenador;
         this.nombre = nombre;
-        this.vida = 10;
-        this.experiencia = 0;
-        this.nivel = 1;
+        this.vida = vida;
+        this.experiencia = experiencia;
+        this.nivel = nivel;
     }
 
     public Pokemon (){}
@@ -29,6 +29,10 @@ public abstract class Pokemon {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public Entrenador getEntrenador(){
+        return entrenador;
     }
 
     public double getVida() {
