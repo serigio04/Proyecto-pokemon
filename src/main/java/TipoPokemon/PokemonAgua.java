@@ -2,8 +2,8 @@ package main.java.TipoPokemon;
 
 public class PokemonAgua extends Pokemon{
     
-    public PokemonAgua (int numPokedex, String nombre, double vida, double experiencia, int nivel){
-        super(numPokedex, nombre, vida, experiencia, nivel);
+    public PokemonAgua (int numPokedex, String nombre, Entrenador entrenador, double vida, double experiencia, int nivel){
+        super(numPokedex, nombre, entrenador, vida, experiencia, nivel);
     }
 
     public void ataqueAgua(double vida){
