@@ -4,6 +4,7 @@ use pokemon;
 create table pokemon(
 	id int auto_increment primary key,
     numeroPokedex int not null,
+    entrenador int,
     nombre varchar(50) not null,
     tipo varchar(50) not null,
     nivel int default 1
@@ -38,9 +39,14 @@ create table mochila(
     posiones int
 );
 
-/* Agregar columna de entrenador a pokemones */
+/* Agregar columna a pokemones */
 alter table pokemon
 add column entrenador int after numeroPokedex;
+
+alter table pokemon 
+add column vida double after nombre,
+add column experiencia double after vida;
+
 
 /* agregar evoluciones en pokedex */ 
 alter table pokedex 
@@ -62,5 +68,9 @@ add constraint foreign key (numeroPokedex) references pokedex(numeroPokedex);
 /* relacion entrenador - mochila */ 
 alter table entrenador
 add constraint foreign key (mochila) references mochila(id);
+
+alter table pokemon
+add column vida double,
+add column experiencia double;
 
 select * from pokemon.pokedex;
