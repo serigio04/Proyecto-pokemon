@@ -1,7 +1,15 @@
 package main.java.Proyecto;
 import java.util.Scanner;
+import main.java.Proyecto.Pokedex;
+import main.java.TipoPokemon.Pokemon;
+import main.java.TipoPokemon.PokemonAgua;
+import main.java.Proyecto.Entrenador;
 
 public class Proyecto {
+
+    static Pokemon pokemon;
+    Entrenador entrenador;
+    Pokedex pokedex;
     
     public static void limpiarPantalla(){
         try {
@@ -29,6 +37,7 @@ public class Proyecto {
         int opcion = 0;
         String nombre;
         int edad;
+        int eleccion;
 
         do{
             limpiarPantalla();
@@ -52,9 +61,22 @@ public class Proyecto {
             esperar(1);
 
             //Pokemon inicial
-            System.out.println("Elige tu pokemon inicial");
+            System.out.println("Elige tu pokemon inicial \n 1. Bulbasaur \n 2. Charmander \n 3. Squirtle");
+            eleccion = scanner.nextInt();
+            switch (eleccion) {
+                case 1:
+                    
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    pokemon = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
+                    break;
+                default:
+                    break;
+            }
         }
         while (true);
-
     }
 }
