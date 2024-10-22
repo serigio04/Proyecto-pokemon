@@ -7,9 +7,10 @@ import main.java.Proyecto.Entrenador;
 
 public class Proyecto {
 
-    static Pokemon pokemon;
+    static Pokemon pokemonInicial;
     Entrenador entrenador;
     Pokedex pokedex;
+    static boolean inicio = true;
     
     public static void limpiarPantalla(){
         try {
@@ -68,15 +69,19 @@ public class Proyecto {
                     
                     break;
                 case 2:
-
+                    
                     break;
                 case 3:
-                    pokemon = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
+                    pokemonInicial = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
+                    System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
                     break;
                 default:
                     break;
             }
+            limpiarPantalla();
+            inicio = false;
         }
-        while (true);
+        while (inicio);
+
     }
 }
