@@ -1,4 +1,9 @@
 package main.java.TipoPokemon;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import main.java.Proyecto.*;
 
 public abstract class Pokemon {
@@ -90,31 +95,98 @@ public abstract class Pokemon {
     }
 
     public void curarse(){
-        this.vida += vida*1.2;
+        this.vida += vida*1.4;
     }
 
     public void huir(){
         System.out.println("Tu y " + this.nombre + " han huido. \n La batalla ha terminado.");
     }
 
-    public void ganarExperiencia(){
-        this.experiencia += vida/3; 
+    public void ganarExperiencia() {
+        this.experiencia += Rival.vida / 3;
+        System.out.println(this.nombre + " ha ganado experiencia. Experiencia total: " + this.experiencia);
     }
 
-    public void subirNivel(){
-        this.nivel++;
-        this.vida = vida+vida/2.5;
-        xpBase = 15;
-        this.experiencia = experiencia + xpBase;
+    private double calcularExperienciaNecesaria() {
+        return 1.3 * this.nivel;    }
+
+    public void subirNivel(Connection conexion){
+        if (this.experiencia >= calcularExperienciaNecesaria()) {
+            this.nivel++;
+            this.vida += vida / 2.6;
+            xpBase = 15;
+    
+            System.out.println(this.nombre + " ha subido al nivel " + this.nivel);
+    
+            evolucionar(conexion);
+        } else {
+            System.out.println(this.nombre + " aún no tiene suficiente experiencia para subir de nivel.");
+        }
     }
 
-    public void evolucionar(){
-        if(this.nivel==16){
-            System.out.println(this.nombre + " quiere evolucionar");
-        }else{
-            if(this.nivel==35){
-                System.out.println(this.nombre + " quiere evolucionar");
+    public void evolucionar(Connection conexion) {
+        if (this.nivel == 16 || this.nivel == 35) {
+            try {
+                // Consulta a la base de datos para obtener la evolución
+                String sql = "SELECT idEvolucion FROM pokedex WHERE id = ?";
+                PreparedStatement pstmt = conexion.prepareStatement(sql);
+                pstmt.setInt(1, this.numPokedex);  // Usamos el id del Pokémon actual
+
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    int idEvolucion = rs.getInt("idEvolucion");
+
+                    if (idEvolucion != 0) {
+                        // Hay una evolución disponible
+                        System.out.println(this.nombre + " ha evolucionado!");
+
+                        // Obtener el nuevo nombre del Pokémon evolucionado
+                        String evolucionSql = "SELECT nombre FROM pokedex WHERE id = ?";
+                        PreparedStatement pstmtEvolucion = conexion.prepareStatement(evolucionSql);
+                        pstmtEvolucion.setInt(1, idEvolucion);
+
+                        ResultSet rsEvolucion = pstmtEvolucion.executeQuery();
+                        if (rsEvolucion.next()) {
+                            this.nombre = rsEvolucion.getString("nombre");
+
+                            // Actualizar los datos del Pokémon en la base de datos
+                            actualizarPokemonEnBD(conexion);
+                            System.out.println("¡Felicidades! " + this.nombre + " es la nueva forma evolucionada.");
+                        }
+
+                        rsEvolucion.close();
+                        pstmtEvolucion.close();
+                    } else {
+                        System.out.println(this.nombre + " no puede evolucionar.");
+                    }
+                }
+                rs.close();
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    public void actualizarPokemonEnBD(Connection conexion) {
+        if (conexion != null) {
+            String sql = "UPDATE pokemon SET nombre = ?, nivel = ?, vida = ?, experiencia = ? WHERE numeroPokedex = ? AND entrenador = ?";
+    
+            try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+                pstmt.setString(1, this.nombre);  // Nuevo nombre del Pokémon si ha evolucionado
+                pstmt.setInt(2, this.nivel);      // Nivel actualizado
+                pstmt.setDouble(3, this.vida);    // Vida actualizada
+                pstmt.setDouble(4, this.experiencia); // Experiencia actualizada
+                pstmt.setInt(5, this.numPokedex); // Número en la Pokédex
+                pstmt.setInt(6, this.entrenador.getId()); // ID del entrenador
+    
+                pstmt.executeUpdate();
+                System.out.println("El Pokémon ha sido actualizado en la base de datos.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No hay conexión con la base de datos.");
         }
     }
 }
