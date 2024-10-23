@@ -1,0 +1,60 @@
+public class Personaje {
+    private String nombre;
+    private int edad;
+    private String genero;
+    private Pokemon pokemonInicial;
+
+    // Constructor con todos los atributos
+    public Personaje(String nombre, int edad, String genero, Pokemon pokemonInicial) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.genero = genero;
+        this.pokemonInicial = pokemonInicial;
+    }
+
+    // Getters
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public Pokemon getPokemonInicial() {
+        return pokemonInicial;
+    }
+
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public void setPokemonInicial(Pokemon pokemonInicial) {
+        this.pokemonInicial = pokemonInicial;
+    }
+
+    // Método para mostrar la información del personaje
+    public void mostrarInfo() {
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Edad: " + edad);
+        System.out.println("Género: " + genero);
+        if (pokemonInicial != null) {
+            System.out.println("Pokémon Inicial: " + pokemonInicial.getNombre());
+        } else {
+            System.out.println("No se ha asignado un Pokémon inicial.");
+        }
+    }
+}
