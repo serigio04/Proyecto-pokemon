@@ -4,7 +4,7 @@ public class Personaje {
     private String genero;
     private Pokemon pokemonInicial;
 
-    // Constructor con todos los atributos
+    // este es el constructor
     public Personaje(String nombre, int edad, String genero, Pokemon pokemonInicial) {
         this.nombre = nombre;
         this.edad = edad;
@@ -12,7 +12,7 @@ public class Personaje {
         this.pokemonInicial = pokemonInicial;
     }
 
-    // Getters
+
     public String getNombre() {
         return nombre;
     }
@@ -46,7 +46,7 @@ public class Personaje {
         this.pokemonInicial = pokemonInicial;
     }
 
-    // Método para mostrar la información del personaje
+    
     public void mostrarInfo() {
         System.out.println("Nombre: " + nombre);
         System.out.println("Edad: " + edad);
