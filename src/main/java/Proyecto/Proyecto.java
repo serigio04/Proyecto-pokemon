@@ -4,6 +4,7 @@ import main.java.Proyecto.Pokedex;
 import main.java.TipoPokemon.Pokemon;
 import main.java.TipoPokemon.PokemonAgua;
 import main.java.TipoPokemon.PokemonFuego;
+import main.java.TipoPokemon.PokemonPlanta;
 import main.java.Proyecto.Entrenador;
 
 public class Proyecto {
@@ -67,10 +68,13 @@ public class Proyecto {
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1:
-                    
+                    pokemonInicial = new PokemonPlanta(1, "Bulbasaur", entrenador, 10, 0, 1);
+                    System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
+                    pokemonInicial.actualizarPokemonEnBD(null);
                     break;
                 case 2:
-                    pokemonInicial = new PokemonFuego(7, "Charmander", entrenador, 10, 0, 1);  
+                    pokemonInicial = new PokemonFuego(4, "Charmander", entrenador, 10, 0, 1);  
+                    System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
                     break;
                 case 3:
                     pokemonInicial = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
