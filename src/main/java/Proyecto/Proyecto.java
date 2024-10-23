@@ -1,5 +1,7 @@
 package main.java.Proyecto;
+import java.sql.Connection;
 import java.util.Scanner;
+import database.Conection.ConectionDB;
 import main.java.Proyecto.Pokedex;
 import main.java.TipoPokemon.Pokemon;
 import main.java.TipoPokemon.PokemonAgua;
@@ -8,7 +10,6 @@ import main.java.TipoPokemon.PokemonPlanta;
 import main.java.Proyecto.Entrenador;
 
 public class Proyecto {
-
     static Pokemon pokemonInicial;
     static Entrenador entrenador;
     Pokedex pokedex;
@@ -35,19 +36,22 @@ public class Proyecto {
         }
     }
     public static void main(String[] args) {
+        //Conexion a la Data Base
+        Connection conexion = ConectionDB.conectar();
+
         Scanner scanner = new Scanner(System.in);
         String genero;
-        int opcion = 0;
         String nombre;
         int edad;
         int eleccion;
 
         do{
             limpiarPantalla();
+            esperar(2);
 
             System.out.println("    Pokemon     ");
             limpiarPantalla();
-            esperar(3);
+            esperar(1);
 
             //Elegi rjugador
             System.out.println("Escoge tu jugador \n Ingresa 'h' para hombre y 'm' para mujer");
@@ -60,6 +64,8 @@ public class Proyecto {
             nombre = scanner.nextLine();
             System.out.println("Ingresa tu edad");
             edad = scanner.nextInt();
+            entrenador = new Entrenador(nombre, edad, genero);
+            entrenador.guardarEnBD(conexion);
             limpiarPantalla();
             esperar(1);
 
@@ -70,14 +76,16 @@ public class Proyecto {
                 case 1:
                     pokemonInicial = new PokemonPlanta(1, "Bulbasaur", entrenador, 10, 0, 1);
                     System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
-                    pokemonInicial.actualizarPokemonEnBD(null);
+                    pokemonInicial.agregarPokemonEnBD(conexion);
                     break;
                 case 2:
-                    pokemonInicial = new PokemonFuego(4, "Charmander", entrenador, 10, 0, 1);  
+                    pokemonInicial = new PokemonFuego(4, "Charmander", entrenador, 10, 0, 1);
+                    pokemonInicial.agregarPokemonEnBD(conexion);
                     System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
                     break;
                 case 3:
                     pokemonInicial = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
+                    pokemonInicial.agregarPokemonEnBD(conexion);
                     System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
                     break;
                 default:
@@ -87,6 +95,6 @@ public class Proyecto {
             inicio = false;
         }
         while (inicio);
-
+        scanner.close();
     }
 }
