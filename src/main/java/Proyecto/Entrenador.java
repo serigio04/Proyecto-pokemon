@@ -1,18 +1,27 @@
-public class Personaje {
+package main.java.Proyecto;
+
+public class Entrenador {
     private String nombre;
     private int edad;
     private String genero;
-    private Pokemon pokemonInicial;
+    private int id;
 
    
-    public Personaje(String nombre, int edad, String genero, Pokemon pokemonInicial) {
+    public Entrenador(int id, String nombre, int edad, String genero) {
+        this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.genero = genero;
-        this.pokemonInicial = pokemonInicial;
     }
 
-   
+    public Entrenador(){}
+
+// getters
+
+    public int getId(){
+        return id;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -25,11 +34,12 @@ public class Personaje {
         return genero;
     }
 
-    public Pokemon getPokemonInicial() {
-        return pokemonInicial;
+//setters
+
+    public void setId(int id){
+        this.id = id;
     }
 
-    // Setters por si quieres modificar los valores más adelante
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -41,8 +51,5 @@ public class Personaje {
     public void setGenero(String genero) {
         this.genero = genero;
     }
-
-    public void setPokemonInicial(Pokemon pokemonInicial) {
-        this.pokemonInicial = pokemonInicial;
-    }
+    
 }

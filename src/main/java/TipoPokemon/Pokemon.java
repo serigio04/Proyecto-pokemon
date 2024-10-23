@@ -3,8 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import main.java.Proyecto.*;
+import main.java.Proyecto.Entrenador;
 
 public abstract class Pokemon {
     public int numPokedex;
@@ -36,8 +35,8 @@ public abstract class Pokemon {
         return nombre;
     }
 
-    public Entrenador getEntrenador(){
-        return entrenador;
+    public int getEntrenadorId(){
+        return entrenador.getId();
     }
 
     public double getVida() {
@@ -103,7 +102,7 @@ public abstract class Pokemon {
     }
 
     public void ganarExperiencia() {
-        this.experiencia += Rival.vida / 3;
+        this.experiencia += this.vida / 3;
         System.out.println(this.nombre + " ha ganado experiencia. Experiencia total: " + this.experiencia);
     }
 

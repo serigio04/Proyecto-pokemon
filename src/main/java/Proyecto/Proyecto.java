@@ -9,7 +9,7 @@ import main.java.Proyecto.Entrenador;
 public class Proyecto {
 
     static Pokemon pokemonInicial;
-    Entrenador entrenador;
+    static Entrenador entrenador;
     Pokedex pokedex;
     static boolean inicio = true;
     
