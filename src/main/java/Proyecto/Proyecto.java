@@ -3,6 +3,7 @@ import java.util.Scanner;
 import main.java.Proyecto.Pokedex;
 import main.java.TipoPokemon.Pokemon;
 import main.java.TipoPokemon.PokemonAgua;
+import main.java.TipoPokemon.PokemonFuego;
 import main.java.Proyecto.Entrenador;
 
 public class Proyecto {
@@ -69,7 +70,7 @@ public class Proyecto {
                     
                     break;
                 case 2:
-                    
+                    pokemonInicial = new PokemonFuego(7, "Charmander", entrenador, 10, 0, 1);  
                     break;
                 case 3:
                     pokemonInicial = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
