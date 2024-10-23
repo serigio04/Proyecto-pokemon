@@ -2,8 +2,8 @@ package main.java.TipoPokemon;
 
 public class PokemonFuego extends Pokemon{
 
-    public PokemonFuego (int numPokedex, string nombre, double vida, double experiencia, int nivel){
-        super(numPokedex, nombre, vida, experiencia, nivel);
+    public PokemonFuego (int numPokedex, String nombre, Entrenador entrenador, double vida, double experiencia, int nivel){
+        super(numPokedex, nombre, entrenador, vida, experiencia, nivel);
     }
 
     public void ataqueFuego (double vida){
