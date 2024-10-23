@@ -37,7 +37,7 @@ public class Pokedex {
             String sql = "insert into pokemon (numeroPokedex, entrenador, nombre, tipo, nivel, vida, experiencia) values (?,?,?,?,?,?,?)";
             try (PreparedStatement pstmt = conexion.prepareStatement(sql)){
                 pstmt.setInt(1, pokemon.getNumPokedex());
-                pstmt.setInt(2, pokemon.getEntrenador());
+                pstmt.setInt(2, pokemon.getEntrenadorId());
                 pstmt.setString(3, pokemon.getNombre());
                 pstmt.setString(4, pokemon.getClass().getSimpleName());
                 pstmt.setInt(5, pokemon.getNivel());
