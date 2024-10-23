@@ -188,4 +188,27 @@ public abstract class Pokemon {
             System.out.println("No hay conexión con la base de datos.");
         }
     }
+
+//metodo para agregar a la pokedex ( tabla pokemon en la database )
+    public void agregarPokemonEnBD(Connection conexion) {
+        if (conexion != null) {
+            String sql = "INSERT INTO pokemon (nombre, tipo, entrenador_id, nivel, vida, experiencia) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+                pstmt.setString(1, this.nombre); // Nombre del Pokémon
+                pstmt.setString(2, this.getClass().getSimpleName()); // Tipo del Pokémon
+                pstmt.setInt(3, this.entrenador.getId()); // ID del entrenador
+                pstmt.setInt(4, this.nivel); // Nivel inicial
+                pstmt.setDouble(5, this.vida); // Vida inicial
+                pstmt.setDouble(6, this.experiencia); // Experiencia inicial
+
+                // Ejecutar la inserción
+                pstmt.executeUpdate();
+                System.out.println(this.nombre + " ha sido guardado en la base de datos.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No hay conexión con la base de datos.");
+        }
+    }
 }
