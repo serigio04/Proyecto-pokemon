@@ -4,7 +4,7 @@ public class Personaje {
     private String genero;
     private Pokemon pokemonInicial;
 
-    // este es el constructor
+   
     public Personaje(String nombre, int edad, String genero, Pokemon pokemonInicial) {
         this.nombre = nombre;
         this.edad = edad;
@@ -12,7 +12,7 @@ public class Personaje {
         this.pokemonInicial = pokemonInicial;
     }
 
-
+   
     public String getNombre() {
         return nombre;
     }
@@ -29,7 +29,7 @@ public class Personaje {
         return pokemonInicial;
     }
 
-    // Setters
+    // Setters por si quieres modificar los valores más adelante
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -44,17 +44,5 @@ public class Personaje {
 
     public void setPokemonInicial(Pokemon pokemonInicial) {
         this.pokemonInicial = pokemonInicial;
-    }
-
-    
-    public void mostrarInfo() {
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Edad: " + edad);
-        System.out.println("Género: " + genero);
-        if (pokemonInicial != null) {
-            System.out.println("Pokémon Inicial: " + pokemonInicial.getNombre());
-        } else {
-            System.out.println("No se ha asignado un Pokémon inicial.");
-        }
     }
 }
