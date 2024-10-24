@@ -45,13 +45,12 @@ public class Proyecto {
         int edad;
         int eleccion;
 
-        do{
-            limpiarPantalla();
-            esperar(2);
+        System.out.println(conexion);
 
+        do{
             System.out.println("    Pokemon     ");
-            limpiarPantalla();
             esperar(1);
+            limpiarPantalla();
 
             //Elegi rjugador
             System.out.println("Escoge tu jugador \n Ingresa 'h' para hombre y 'm' para mujer");
