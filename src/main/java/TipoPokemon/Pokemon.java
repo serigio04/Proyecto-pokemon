@@ -1,31 +1,38 @@
 package main.java.TipoPokemon;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import main.java.Proyecto.Entrenador;
 
 public abstract class Pokemon {
-    public int numPokedex;
+    protected int numPokedex;
     protected String nombre;
     protected double vida;
+    protected double vidaMaxima;  // Nueva variable para diferenciar la vida máxima de la actual
     protected double experiencia;
     protected int nivel;
     Entrenador entrenador;
-    double danioBase = Math.random() * (5 - 1) + 1;
-    double xpBase;
+    protected int entrenadorId;
+    protected int danioBase;
+    protected int xpBase;
 
-    public Pokemon (int numPokedex, Entrenador entrenador, String nombre, double vida, double experiencia, int nivel){
+    public Pokemon (int numPokedex, int entrenadorId, String nombre, double vida, double experiencia, int nivel){
         this.numPokedex = numPokedex;
-        this.entrenador = entrenador;
+        this.entrenadorId = entrenadorId;
         this.nombre = nombre;
         this.vida = vida;
+        this.vidaMaxima = vida;
         this.experiencia = experiencia;
         this.nivel = nivel;
     }
 
     public Pokemon (){}
 
+// Arraylist
+    private static ArrayList<Pokemon> pokemons = new ArrayList<>();
 // Métodos get
     public int getNumPokedex() {
         return numPokedex;
@@ -36,7 +43,7 @@ public abstract class Pokemon {
     }
 
     public int getEntrenadorId(){
-        return entrenador.getId();
+        return entrenadorId;
     }
 
     public double getVida() {
@@ -49,6 +56,10 @@ public abstract class Pokemon {
 
     public int getNivel() {
         return nivel;
+    }
+
+    public static ArrayList<Pokemon> getPokemons() {
+        return pokemons;
     }
 
     // Métodos set
@@ -82,6 +93,10 @@ public abstract class Pokemon {
         rival.recibirDanio(danio);
     }
 
+    public void atacar(Pokemon rival, double danio){
+        rival.recibirDanio(danio);
+    }
+
     public void recibirDanio(double danio) {
         this.vida -= danio;
         System.out.println(this.nombre + " ha recibido " + danio + " puntos de ataque");
@@ -112,8 +127,9 @@ public abstract class Pokemon {
     public void subirNivel(Connection conexion){
         if (this.experiencia >= calcularExperienciaNecesaria()) {
             this.nivel++;
-            this.vida += vida / 2.6;
-            xpBase = 15;
+            this.vidaMaxima += vidaMaxima / 2.6;
+            this.vida = this.vidaMaxima;
+            xpBase += 15;
     
             System.out.println(this.nombre + " ha subido al nivel " + this.nivel);
     
@@ -149,7 +165,7 @@ public abstract class Pokemon {
                             this.nombre = rsEvolucion.getString("nombre");
 
                             // Actualizar los datos del Pokémon en la base de datos
-                            actualizarPokemonEnBD(conexion);
+                            actualizarPokemon(conexion);
                             System.out.println("¡Felicidades! " + this.nombre + " es la nueva forma evolucionada.");
                         }
 
@@ -167,7 +183,7 @@ public abstract class Pokemon {
         }
     }
 
-    public void actualizarPokemonEnBD(Connection conexion) {
+    public void actualizarPokemon(Connection conexion) {
         if (conexion != null) {
             String sql = "UPDATE pokemon SET nombre = ?, nivel = ?, vida = ?, experiencia = ? WHERE numeroPokedex = ? AND entrenador = ?";
     
@@ -180,7 +196,14 @@ public abstract class Pokemon {
                 pstmt.setInt(6, this.entrenador.getId()); // ID del entrenador
     
                 pstmt.executeUpdate();
-                System.out.println("El Pokémon ha sido actualizado en la base de datos.");
+                for (int i = 0; i < pokemons.size(); i++) {
+                    Pokemon p = pokemons.get(i);
+                    if (p.numPokedex == this.numPokedex && p.entrenador.getId() == this.entrenador.getId()) {
+                        pokemons.set(i, this); // Actualizar Pokémon en el ArrayList
+                        break;
+                    }
+                }
+                System.out.println("El Pokémon ha sido actualizado en la pokedex.");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -190,7 +213,7 @@ public abstract class Pokemon {
     }
 
 //metodo para agregar a la pokedex ( tabla pokemon en la database )
-    public void agregarPokemonEnBD(Connection conexion) {
+    public void agregarPokemon(Connection conexion) {
         if (conexion != null) {
             String sql = "INSERT INTO pokemon (nombre, tipo, entrenador_id, nivel, vida, experiencia) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
@@ -203,12 +226,17 @@ public abstract class Pokemon {
 
                 // Ejecutar la inserción
                 pstmt.executeUpdate();
-                System.out.println(this.nombre + " ha sido guardado en la base de datos.");
+                pokemons.add(this);
+                System.out.println(this.nombre + " ha sido guardado en la pokedex.");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("No hay conexión con la base de datos.");
         }
+    }
+
+    public void agregarPokemon(Pokemon pokemon){
+        pokemons.add(this);
     }
 }

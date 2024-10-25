@@ -1,10 +1,8 @@
 package main.java.TipoPokemon;
 
-import main.java.Proyecto.Entrenador;
-
 public class PokemonPlanta extends Pokemon {
 
-    public PokemonPlanta (int numPokedex, String nombre, Entrenador entrenador, double vida, double experiencia, int nivel){
+    public PokemonPlanta (int numPokedex, String nombre, int entrenador, double vida, double experiencia, int nivel){
         super(numPokedex, entrenador, nombre, vida, experiencia, nivel);
     }
 
