@@ -1,17 +1,30 @@
 package main.java.Proyecto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class Entrenador {
+    private static int contador = 0;
     private String nombre;
     private int edad;
     private String genero;
     private int id; // ID generado por la base de datos
 
+    private static ArrayList<Entrenador> entrenadores = new ArrayList<>();
+
     public Entrenador(String nombre, int edad, String genero) {
+        this.id = ++contador;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.genero = genero;
+    }
+
+    public Entrenador(int id, String nombre, int edad, String genero) {
+        this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.genero = genero;
@@ -55,7 +68,7 @@ public class Entrenador {
         this.genero = genero;
     }
 
-    public void guardarEnBD(Connection conexion) {
+    public void guardar(Connection conexion) {
         if (conexion != null) {
             String sql = "INSERT INTO entrenador (nombre, edad, genero) VALUES (?, ?, ?)";
             try (PreparedStatement pstmt = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -73,11 +86,17 @@ public class Entrenador {
                 }
                 
                 System.out.println("Entrenador " + this.nombre + " ha sido guardado exitosamente con ID: " + this.id);
+
+                entrenadores.add(this);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
             System.out.println("No hay conexión con la base de datos.");
         }
+    }
+
+    public static ArrayList<Entrenador> obtenerEntrenadores() {
+        return entrenadores;
     }
 }
