@@ -6,9 +6,12 @@ import java.sql.SQLException;
 
 public class ConectionDB {
     public static Connection conectar(){
-        String url = "db-pokemon.chkuou2ciahg.us-east-2.rds.amazonaws.com";
-        String usuario = "ash_ketchup"; 
-        String contrasena = "ProyectoPokemon24"; 
+        // aws String url = "jdbc:mysql://db-pokemon.chkuou2ciahg.us-east-2.rds.amazonaws.com:3306/pokemon_db";
+        String url = "jdbc:mysql://127.0.0.1:3306/pokemon_db";
+        // aws String usuario = "ash_ketchup"; 
+        String usuario = "root"; 
+        // aws String contrasena = "ProyectoPokemon24"; 
+        String contrasena = "root"; 
 
         Connection conexion = null;
 
