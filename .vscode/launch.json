@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Proyecto",
+            "request": "launch",
+            "mainClass": "main.java.Proyecto.Proyecto",
+            "projectName": "Proyecto-progra-2_f5b28bf3"
+        },
+        {
             "type": "jdk",
             "request": "launch",
             "name": "Launch Java App"
