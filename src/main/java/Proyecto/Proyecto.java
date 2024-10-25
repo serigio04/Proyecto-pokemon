@@ -44,56 +44,60 @@ public class Proyecto {
         String nombre;
         int edad;
         int eleccion;
-
+        Entrenador entrenador;
         System.out.println(conexion);
 
-        // do{
-        //     System.out.println("    Pokemon     ");
-        //     esperar(1);
-        //     limpiarPantalla();
+        do{
+            System.out.println("    Pokemon     ");
+            esperar(1);
+            limpiarPantalla();
 
-        //     //Elegi rjugador
-        //     System.out.println("Escoge tu jugador \n Ingresa 'h' para hombre y 'm' para mujer");
-        //     genero = scanner.nextLine();
-        //     limpiarPantalla();
-        //     esperar(1);
+            //Elegi rjugador
+            System.out.println("Escoge tu jugador \n Ingresa 'h' para hombre y 'm' para mujer");
+            genero = scanner.nextLine();
+            limpiarPantalla();
+            esperar(1);
 
-        //     //Nombre y edad
-        //     System.out.println("Ingresa tu nombre");
-        //     nombre = scanner.nextLine();
-        //     System.out.println("Ingresa tu edad");
-        //     edad = scanner.nextInt();
-        //     entrenador = new Entrenador(nombre, edad, genero);
-        //     entrenador.guardarEnBD(conexion);
-        //     limpiarPantalla();
-        //     esperar(1);
+            //Nombre y edad
+            System.out.println("Ingresa tu nombre");
+            nombre = scanner.nextLine();
+            System.out.println("Ingresa tu edad");
+            edad = scanner.nextInt();
+            entrenador = new Entrenador(nombre, edad, genero);
+            entrenador.guardar(conexion);
+            int entrenadorId = entrenador.getId();
 
-        //     //Pokemon inicial
-        //     System.out.println("Elige tu pokemon inicial \n 1. Bulbasaur \n 2. Charmander \n 3. Squirtle");
-        //     eleccion = scanner.nextInt();
-        //     switch (eleccion) {
-        //         case 1:
-        //             pokemonInicial = new PokemonPlanta(1, "Bulbasaur", entrenador, 10, 0, 1);
-        //             System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
-        //             pokemonInicial.agregarPokemonEnBD(conexion);
-        //             break;
-        //         case 2:
-        //             pokemonInicial = new PokemonFuego(4, "Charmander", entrenador, 10, 0, 1);
-        //             pokemonInicial.agregarPokemonEnBD(conexion);
-        //             System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
-        //             break;
-        //         case 3:
-        //             pokemonInicial = new PokemonAgua(7, "Squirtle", entrenador, 10, 0, 1);
-        //             pokemonInicial.agregarPokemonEnBD(conexion);
-        //             System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        //     limpiarPantalla();
-        //     inicio = false;
-        // }
-        // while (inicio);
+            limpiarPantalla();
+            esperar(1);
+
+            //Pokemon inicial
+            System.out.println("Elige tu pokemon inicial \n 1. Bulbasaur \n 2. Charmander \n 3. Squirtle");
+            eleccion = scanner.nextInt();
+            switch (eleccion) {
+                case 1:
+                    pokemonInicial = new PokemonPlanta(1, "Bulbasaur", entrenadorId, 10, 0, 1);
+                    System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
+                    pokemonInicial.agregarPokemon(conexion);
+                    break;
+                case 2:
+                    pokemonInicial = new PokemonFuego(4, "Charmander", entrenadorId, 10, 0, 1);
+                    pokemonInicial.agregarPokemon(conexion);
+                    System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
+                    break;
+                case 3:
+                    pokemonInicial = new PokemonAgua(7, "Squirtle", entrenadorId, 10, 0, 1);
+                    pokemonInicial.agregarPokemon(pokemonInicial);
+                    System.out.println(pokemonInicial.getNombre() + " ha sido añadido a tu pokedex");
+                    break;
+                default:
+                    break;
+            }
+            limpiarPantalla();
+            inicio = false;
+
+            System.out.println(Pokemon.getPokemons());
+        }
+        while (inicio);
         scanner.close();
     }
 }
