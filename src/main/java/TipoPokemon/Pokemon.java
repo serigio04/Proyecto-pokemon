@@ -82,14 +82,21 @@ public abstract class Pokemon {
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
+
+    public void setEntrenadorId(int id){
+        this.entrenadorId = id;
+    }
 // metodos de la clases
     public void atacar(Pokemon rival){
         double critico = Math.random() < 0.1 ? 2 : 1;
         System.out.println(this.nombre + " ataca!");
         double danio = ((this.vida * 0.1) + danioBase) * (nivel * 0.5) * critico;
-        if (critico == 2){
-            System.out.println(this.nombre + " ha hecho un golpe critico");
+        danio = Math.round(danio * 100.0) / 100.0;
+
+        if (critico == 2) {
+            System.out.println(this.nombre + " ha hecho un golpe crítico");
         }
+        danio = Math.max(danio, 0);
         rival.recibirDanio(danio);
     }
 
@@ -100,42 +107,48 @@ public abstract class Pokemon {
     public void recibirDanio(double danio) {
         this.vida -= danio;
         System.out.println(this.nombre + " ha recibido " + danio + " puntos de ataque");
+        System.out.println("La vida actual de"+this.getNombre()+" es de "+this.getVida());
         if (this.vida <= 0) {
             this.vida = 0;
-            System.out.println(this.nombre + " ha sido derrotado.");
-        } else {
-            System.out.println(this.nombre + " ahora tiene " + this.vida + " puntos de vida.");
-        }
+            System.out.println(this.nombre + " ha sido derrotado.");}
     }
 
     public void curarse(){
         this.vida += vida*1.4;
     }
 
-    public void huir(){
-        System.out.println("Tu y " + this.nombre + " han huido. \n La batalla ha terminado.");
-    }
-
-    public void ganarExperiencia() {
-        this.experiencia += this.vida / 3;
-        System.out.println(this.nombre + " ha ganado experiencia. Experiencia total: " + this.experiencia);
-    }
+    // public void ganarExperiencia() {
+    //     this.experiencia += this.vida * this.nivel / 4;
+    //     System.out.println(this.nombre + " ha ganado experiencia. Experiencia total: " + this.experiencia);
+    //     while (this.experiencia >= calcularExperienciaNecesaria()) {
+    //         subirNivel(null);
+    //     }
+    //     if (debeEvolucionar()) {
+    //         evolucionar(); 
+    //     }
+    // }
 
     private double calcularExperienciaNecesaria() {
         return 1.3 * this.nivel;    }
 
-    public void subirNivel(Connection conexion){
-        if (this.experiencia >= calcularExperienciaNecesaria()) {
-            this.nivel++;
-            this.vidaMaxima += vidaMaxima / 2.6;
-            this.vida = this.vidaMaxima;
-            xpBase += 15;
+    // public void subirNivel(Pokemon pokemon){
+    //     this.experiencia -= experienciaNecesaria;
+    //         this.nivel++;
+    //         this.vidaMaxima += vidaMaxima / 2.6;
+    //         this.vida = this.vidaMaxima;
+    //         xpBase += 15;
     
-            System.out.println(this.nombre + " ha subido al nivel " + this.nivel);
+    //         System.out.println(this.nombre + " ha subido al nivel " + this.nivel);
     
-            evolucionar(conexion);
-        } else {
-            System.out.println(this.nombre + " aún no tiene suficiente experiencia para subir de nivel.");
+    //         evolucionar(pokemon);
+    //     } else {
+    //         System.out.println(this.nombre + " aún no tiene suficiente experiencia para subir de nivel.");
+    //     }
+    // }
+
+    public void evolucionar(Pokemon pokemon){
+        if (true) {
+            
         }
     }
 
@@ -239,4 +252,5 @@ public abstract class Pokemon {
     public void agregarPokemon(Pokemon pokemon){
         pokemons.add(this);
     }
+
 }

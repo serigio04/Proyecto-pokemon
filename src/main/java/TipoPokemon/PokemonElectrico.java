@@ -6,6 +6,10 @@ public class PokemonElectrico extends Pokemon{
         super(numPokedex, entrenador, nombre, vida, experiencia, nivel);
     }
 
+    public PokemonElectrico(int numPokedex, String nombre, Object object, int vida, int experiencia, int nivel) {
+        //TODO Auto-generated constructor stub
+    }
+
     public void ataqueElectrico (Pokemon rival){
         double danio = rival.getVida() / 3;
         this.atacar(rival, danio);  // Reducir vida del rival
